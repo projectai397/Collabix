@@ -22,8 +22,11 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: ReactNode }>) {
   return (
-    <html lang="en">
-      <body className={`${inter.className} bg-dark-2`}>
+    <html lang="en" suppressHydrationWarning>
+      <body
+        className={`${inter.className} bg-dark-2`}
+        suppressHydrationWarning
+      >
         <ClerkProvider
           appearance={
             {

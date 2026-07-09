@@ -63,12 +63,24 @@ const CallList = ({ type }: { type: 'ended' | 'upcoming' | 'recordings' }) => {
   const calls = getCalls();
   const noCallsMessage = getNoCallsMessage();
 
+  const getMeetingKey = (
+    meeting: Call | CallRecording,
+    index: number,
+  ): string => {
+    if (type === 'recordings') {
+      const recording = meeting as CallRecording;
+      return recording.url ?? recording.filename ?? `recording-${index}`;
+    }
+
+    return (meeting as Call).id ?? `call-${index}`;
+  };
+
   return (
     <div className="grid grid-cols-1 gap-5 xl:grid-cols-2">
       {calls && calls.length > 0 ? (
-        calls.map((meeting: Call | CallRecording) => (
+        calls.map((meeting: Call | CallRecording, index) => (
           <MeetingCard
-            key={(meeting as Call).id}
+            key={getMeetingKey(meeting, index)}
             icon={
               type === 'ended'
                 ? '/icons/previous.svg'

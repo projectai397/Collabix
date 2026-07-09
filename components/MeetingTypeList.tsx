@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import HomeCard from './HomeCard';
 import MeetingModal from './MeetingModal';
 import { Call, useStreamVideoClient } from '@stream-io/video-react-sdk';
-import { useUser } from '@clerk/nextjs';
+import { useAppUser } from '@/hooks/useAppUser';
 import Loader from './Loader';
 import { Textarea } from './ui/textarea';
 import ReactDatePicker from 'react-datepicker';
@@ -28,7 +28,7 @@ const MeetingTypeList = () => {
   const [values, setValues] = useState(initialValues);
   const [callDetail, setCallDetail] = useState<Call>();
   const client = useStreamVideoClient();
-  const { user } = useUser();
+  const { user } = useAppUser();
   const { toast } = useToast();
 
   const createMeeting = async () => {

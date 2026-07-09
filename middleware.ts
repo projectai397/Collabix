@@ -1,4 +1,7 @@
 import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
+import { NextResponse } from 'next/server';
+
+import { isAuthBypassed } from '@/lib/auth-bypass';
 
 const isProtectedRoute = createRouteMatcher([
   '/',
@@ -9,7 +12,16 @@ const isProtectedRoute = createRouteMatcher([
   '/personal-room',
 ]);
 
+const isAuthRoute = createRouteMatcher(['/sign-in(.*)', '/sign-up(.*)']);
+
 export default clerkMiddleware(async (auth, req) => {
+  if (isAuthBypassed()) {
+    if (isAuthRoute(req)) {
+      return NextResponse.redirect(new URL('/', req.url));
+    }
+    return;
+  }
+
   if (isProtectedRoute(req)) await auth.protect();
 });
 

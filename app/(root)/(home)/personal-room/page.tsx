@@ -1,6 +1,6 @@
 "use client";
 
-import { useUser } from "@clerk/nextjs";
+import { useAppUser } from "@/hooks/useAppUser";
 import { useStreamVideoClient } from "@stream-io/video-react-sdk";
 import { useRouter } from "next/navigation";
 
@@ -29,7 +29,7 @@ const Table = ({
 
 const PersonalRoom = () => {
   const router = useRouter();
-  const { user } = useUser();
+  const { user } = useAppUser();
   const client = useStreamVideoClient();
   const { toast } = useToast();
 
